@@ -1,0 +1,14 @@
+@import url('https://rsms.me/inter/inter.css');
+@import "./tailwind-theme.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: InterVariable, Inter, system-ui, sans-serif;
+}
+
+/* Support for the InterVariable font */
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: InterVariable, system-ui, sans-serif;
+  }
+}

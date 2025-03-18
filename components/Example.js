@@ -123,6 +123,10 @@ const testimonials = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mainFormSubmitting, setMainFormSubmitting] = useState(false)
+  const [mainFormSuccess, setMainFormSuccess] = useState(false)
+  const [footerFormSubmitting, setFooterFormSubmitting] = useState(false)
+  const [footerFormSuccess, setFooterFormSuccess] = useState(false)
   // Add a function to handle smooth scrolling
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -140,6 +144,43 @@ export default function Example() {
       });
     }
   };
+
+  useEffect(() => {
+    const handleFormSubmit = (formId, setSubmitting, setSuccess) => {
+      const form = document.getElementById(formId);
+      if (!form) return;
+      
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        setSubmitting(true);
+        
+        const formData = new FormData(form);
+        const url = form.getAttribute('action');
+        
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(data => {
+          setSubmitting(false);
+          if (data.success) {
+            setSuccess(true);
+            form.reset();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          setSubmitting(false);
+        });
+      });
+    };
+    
+    // Initier begge formularers event listeners
+    handleFormSubmit('ml-form-23805225', setMainFormSubmitting, setMainFormSuccess);
+    handleFormSubmit('footer-newsletter-form', setFooterFormSubmitting, setFooterFormSuccess);
+  }, []);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -364,47 +405,55 @@ export default function Example() {
           </div>
         </div>
 
-        {/* newsletter section with ID */}
-        <div id="newsletter" className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32">
-            <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Get notified when we're launching
-            </h2>
-            <p className="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
-              Tilmeld dig nyhedsbrevet og vær blandt de første til at modtage dine daglige AI-prompts.
-            </p>
-            
-            {/* MailerLite form - simplified implementation */}
-            <div className="mx-auto mt-10 max-w-md">
-              <form 
-                className="flex gap-x-4"
-                action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                method="post"
-                id="ml-form-23805225"
-              >
-                <input type="hidden" name="ml-submit" value="1" />
-                <input type="hidden" name="anticsrf" value="true" />
-                
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="fields[email]"
-                  type="email"
-                  required
-                  placeholder="Indtast din email"
-                  autoComplete="email"
-                  className="min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
-                />
-                <button
-                  type="submit"
-                  className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Tilmeld mig
-                </button>
-              </form>
-            </div>
+ {/* newsletter section with ID */}
+<div id="newsletter" className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+  <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32">
+    <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+      Get notified when we're launching
+    </h2>
+    <p className="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
+      Tilmeld dig nyhedsbrevet og vær blandt de første til at modtage dine daglige AI-prompts.
+    </p>
+    
+    {/* MailerLite form - opdateret implementation */}
+    <div className="mx-auto mt-10 max-w-md">
+      {mainFormSuccess ? (
+        <div className="text-center py-4 bg-white/10 rounded-md">
+          <p className="text-white font-medium">Tak for din tilmelding! Vi glæder os til at dele AI-prompts med dig.</p>
+        </div>
+      ) : (
+        <form 
+          className="flex gap-x-4"
+          action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+          method="post"
+          id="ml-form-23805225"
+        >
+          <input type="hidden" name="ml-submit" value="1" />
+          <input type="hidden" name="anticsrf" value="true" />
+          
+          <label htmlFor="email-address" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="email-address"
+            name="fields[email]"
+            type="email"
+            required
+            placeholder="Indtast din email"
+            autoComplete="email"
+            className="min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+            disabled={mainFormSubmitting}
+          />
+          <button
+            type="submit"
+            className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            disabled={mainFormSubmitting}
+          >
+            {mainFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
+          </button>
+        </form>
+      )}
+    </div>
             
             <svg
               viewBox="0 0 1024 1024"
@@ -542,34 +591,42 @@ export default function Example() {
               </div>
               
               <div className="mt-8 md:mt-0">
-                <form 
-                  className="flex flex-col sm:flex-row sm:gap-x-4"
-                  action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                  method="post"
-                  id="footer-newsletter-form"
-                >
-                  <input type="hidden" name="ml-submit" value="1" />
-                  <input type="hidden" name="anticsrf" value="true" />
-                  
-                  <div className="flex flex-col sm:flex-row w-full gap-3">
-                    <input
-                      id="footer-email"
-                      name="fields[email]"
-                      type="email"
-                      required
-                      placeholder="Enter your email"
-                      autoComplete="email"
-                      className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
-                    />
-                    <button
-                      type="submit"
-                      className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400"
-                    >
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
-              </div>
+  {footerFormSuccess ? (
+    <div className="text-center py-4 bg-[#1e2433]/50 rounded-md">
+      <p className="text-white font-medium">Tak for din tilmelding!</p>
+    </div>
+  ) : (
+    <form 
+      className="flex flex-col sm:flex-row sm:gap-x-4"
+      action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+      method="post"
+      id="footer-newsletter-form"
+    >
+      <input type="hidden" name="ml-submit" value="1" />
+      <input type="hidden" name="anticsrf" value="true" />
+      
+      <div className="flex flex-col sm:flex-row w-full gap-3">
+        <input
+          id="footer-email"
+          name="fields[email]"
+          type="email"
+          required
+          placeholder="Enter your email"
+          autoComplete="email"
+          className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
+          disabled={footerFormSubmitting}
+        />
+        <button
+          type="submit"
+          className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400"
+          disabled={footerFormSubmitting}
+        >
+          {footerFormSubmitting ? 'Sender...' : 'Subscribe'}
+        </button>
+      </div>
+    </form>
+  )}
+</div>
             </div>
           </div>
           

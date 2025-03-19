@@ -192,7 +192,7 @@ export default function Example() {
 
       <main>
         {/* Hero section */}
-        <div className="relative isolate pt-14">
+        <div className="relative isolate">
           <svg
             aria-hidden="true"
             className="absolute inset-0 -z-10 size-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
@@ -248,11 +248,16 @@ export default function Example() {
               <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
                 <div className="flex">
                   <div className="relative flex items-center gap-x-4 rounded-full bg-white px-4 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                    <span className="font-semibold text-indigo-600">Lær at bruge AI</span>
+                    <span className="font-semibold text-indigo-600">Gratis e-mail kursus</span>
                     <span aria-hidden="true" className="h-4 w-px bg-gray-900/10" />
-                    <a href="#" className="flex items-center gap-x-1">
+                    <a href="#newsletter" className="flex items-center gap-x-1"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          scrollToSection('newsletter');
+                                        }}
+                                        >
                       <span aria-hidden="true" className="absolute inset-0" />
-                      Brug 10 minutter hver dag
+                      Ny AI-udfordring hver dag i et år
                       <ChevronRightIcon aria-hidden="true" className="-mr-2 size-5 text-gray-400" />
                     </a>
                   </div>
@@ -261,8 +266,7 @@ export default function Example() {
                   Sæt 10 minutter i kalenderen til daglig AI træning
                 </h1>
                 <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                  fugiat veniam occaecat fugiat aliqua. Anim aute id magna aliqua ad ad non deserunt sunt.
+                  Du bruger ChatGPT til at rette dine stavefejl og måske skrive en fest-sang. Men hvis du vil virkelig vil løfte dit arbejde med AI kræver det en dedikeret indsats at udforske mulighederne.
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
                   <a
@@ -287,7 +291,7 @@ export default function Example() {
                   </a>
                 </div>
               </div>
-              <div className="mt-16 sm:mt-24 lg:mt-0 lg:shrink-0 lg:grow">
+              <div className="hidden sm:block mt-16 sm:mt-24 lg:mt-0 lg:shrink-0 lg:grow">
                 <svg role="img" viewBox="0 0 366 729" className="mx-auto w-[22.875rem] max-w-full drop-shadow-xl">
                   <title>App screenshot</title>
                   <defs>
@@ -322,10 +326,8 @@ export default function Example() {
           </div>
         </div>
 
-        {/* Logo cloud removed */}
-
         {/* Feature section */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8" id="features">
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-6 lg:px-8" id="features">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-20 sm:rounded-3xl sm:px-10 sm:py-24 lg:py-24 xl:px-24">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-y-0">
               <div className="lg:row-start-2 lg:max-w-md">
@@ -373,7 +375,7 @@ export default function Example() {
         </div>
 
         {/* Features grid section */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base/7 font-semibold text-indigo-600">Træn dine AI-rutiner</h2>
             <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance">
@@ -393,11 +395,6 @@ export default function Example() {
                   </dt>
                   <dd className="mt-4 flex flex-auto flex-col text-base/7 text-gray-600">
                     <p className="flex-auto">{feature.description}</p>
-                    <p className="mt-6">
-                      <a href={feature.href} className="text-sm/6 font-semibold text-indigo-600">
-                        Learn more <span aria-hidden="true">→</span>
-                      </a>
-                    </p>
                   </dd>
                 </div>
               ))}
@@ -406,13 +403,13 @@ export default function Example() {
         </div>
 
  {/* newsletter section with ID */}
-<div id="newsletter" className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+<div id="newsletter" className="mx-auto mt-32 max-w-7xl sm:mt-48 sm:px-6 lg:px-8">
   <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32">
     <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-      Get notified when we're launching
+      Start din træning i dag
     </h2>
     <p className="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
-      Tilmeld dig nyhedsbrevet og vær blandt de første til at modtage dine daglige AI-prompts.
+      Du kan til enhver tid afmelde dig forløbet igen og du modtager ikke andet end en daglig AI-udfordring. Når der er gået et år stopper det automatisk. Ingen reklamer eller spam.
     </p>
     
     {/* MailerLite form - opdateret implementation */}
@@ -483,25 +480,24 @@ export default function Example() {
       </main>
 
       {/* About section */}
-      <div className="overflow-hidden bg-white py-24 sm:py-32">
+      <div className="overflow-hidden bg-white py-24 sm:py-32 sm:mt-24">
         <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
           <div className="max-w-4xl">
-            <p className="text-base/7 font-semibold text-indigo-600">Om mig</p>
             <h1 className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              Daglig træning gør en forskel
+             Samlet og skrevet af Jacob Bøtter
             </h1>
             <p className="mt-6 text-xl/8 text-balance text-gray-700">
-              AI er et håndværk der kan læres, og som alle andre håndværk kræver det daglig træning. 10 Min Challenge giver dig mulighed for at træne dine AI-færdigheder 10 minutter om dagen.
+              Hej! Jeg hedder Jacob og bruger dagligt AI til at hjælpe mig med et utal af opgaver. Henover de sidste par år har jeg samlet på gode prompts og metoder til at få ægte værdi ud af AI. Gennem dette e-mail kursus kan du snuppe mine bedste metoder ganske gratis, dag for dag.
             </p>
           </div>
           <section className="mt-20 grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-16">
             <div className="lg:pr-8">
-              <h2 className="text-2xl font-semibold tracking-tight text-pretty text-gray-900">Min mission</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-pretty text-gray-900">Min baggrund</h2>
               <p className="mt-6 text-base/7 text-gray-600">
-                Jeg har arbejdet med AI siden ChatGPT blev lanceret i november 2022, og har erfaret hvor stor forskel det gør at træne dagligt. Det handler ikke om at være ekspert, men om at opbygge en praktisk forståelse gennem regelmæssig brug.
+                Jeg har brugt de sidste 20 år på forkant med den digitale udvikling. Skrevet fem bøger om ledelse og teknologi. Rådgivet hundredevis af virksomheder og ledere i hvordan ny teknologi kan skabe bedre arbejdspladser.
               </p>
               <p className="mt-8 text-base/7 text-gray-600">
-                Med 10 Min Challenge vil jeg hjælpe dig med at opbygge en daglig rutine, hvor du bruger blot 10 minutter på at træne dine AI-færdigheder. Hver dag modtager du en prompt, som du kan bruge i dit foretrukne AI-værktøj, hvad end det er ChatGPT, Claude, Copilot eller noget helt fjerde.
+                I flere virksomheder har jeg været med til at implementere AI-værktøjer og trænet medarbejdere. Her bliver det tydeligt at et traditionelt kursus kommer til kort når medarbejderen kommer tilbage til pinden og glemmer alt. Der skal ændres vaner, læres nye metoder og hver eneste dag trænes. Derfor har jeg lavet dette brevkursus helt gratis for at finde ud af om det virker – og fordi alle har brug for at lære at mestre AI.
               </p>
             </div>
             <div className="pt-16 lg:row-span-2 lg:-mr-16 xl:mr-auto">
@@ -509,7 +505,7 @@ export default function Example() {
                 <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
                   <img
                     alt="Person arbejder med AI på computer"
-                    src="https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?&auto=format&fit=crop&crop=center&w=560&h=560&q=90"
+                    src="/1.jpg"
                     className="block size-full object-cover"
                     width="560"
                     height="560"
@@ -518,7 +514,7 @@ export default function Example() {
                 <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40">
                   <img
                     alt="Moderne kontor med teknologi"
-                    src="https://images.unsplash.com/photo-1557804506-669a67965ba0?&auto=format&fit=crop&crop=left&w=560&h=560&q=90"
+                    src="/2.jpg"
                     className="block size-full object-cover"
                     width="560"
                     height="560"
@@ -527,7 +523,7 @@ export default function Example() {
                 <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
                   <img
                     alt="Kreativt samarbejde med AI"
-                    src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?&auto=format&fit=crop&crop=left&w=560&h=560&q=90"
+                    src="/3.jpg"
                     className="block size-full object-cover"
                     width="560"
                     height="560"
@@ -536,7 +532,7 @@ export default function Example() {
                 <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40">
                   <img
                     alt="Innovation og kreativitet"
-                    src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?&auto=format&fit=crop&crop=center&w=560&h=560&q=90"
+                    src="/4.jpg"
                     className="block size-full object-cover"
                     width="560"
                     height="560"
@@ -545,31 +541,26 @@ export default function Example() {
               </div>
             </div>
             <div className="max-lg:mt-16 lg:col-span-1">
-              <p className="text-base/7 font-semibold text-gray-500">Resultaterne</p>
+              <p className="text-base/7 font-semibold text-gray-500">Et langt e-mail kursus</p>
               <hr className="mt-6 border-t border-gray-200" />
-              <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-                <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
-                  <dt className="text-sm/6 text-gray-600">Daglige prompts</dt>
-                  <dd className="order-first text-6xl font-semibold tracking-tight">
-                    <span>365</span>
-                  </dd>
-                </div>
-                <div className="flex flex-col gap-y-2 border-b border-dotted border-gray-200 pb-4">
-                  <dt className="text-sm/6 text-gray-600">Minutter om dagen</dt>
+              <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
+
+                <div className="flex flex-col gap-y-2">
+                  <dt className="text-sm/6 text-gray-600">Minutter skal du bruge hver dag</dt>
                   <dd className="order-first text-6xl font-semibold tracking-tight">
                     <span>10</span>
                   </dd>
                 </div>
-                <div className="flex flex-col gap-y-2 max-sm:border-b max-sm:border-dotted max-sm:border-gray-200 max-sm:pb-4">
-                  <dt className="text-sm/6 text-gray-600">Timer på et år</dt>
+                <div className="flex flex-col gap-y-2">
+                  <dt className="text-sm/6 text-gray-600">Timer skal du investere</dt>
                   <dd className="order-first text-6xl font-semibold tracking-tight">
-                    <span>60</span>+
+                    <span>60</span>
                   </dd>
                 </div>
                 <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm/6 text-gray-600">Produktivitetsboost</dt>
+                  <dt className="text-sm/6 text-gray-600">Forskellige metoder & prompts</dt>
                   <dd className="order-first text-6xl font-semibold tracking-tight">
-                    <span>10</span>x
+                    <span>365</span>
                   </dd>
                 </div>
               </dl>
@@ -579,14 +570,14 @@ export default function Example() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-32 bg-[#121620] sm:mt-56">
+      <footer className="mt-32 bg-[#121620] sm:mt-12">
         <div className="mx-auto max-w-7xl px-6 pt-12 pb-8 sm:pt-16 lg:px-8">
           <div className="border-t border-gray-800 pt-8">
             <div className="max-w-md mx-auto md:max-w-none md:flex md:justify-between md:gap-8">
               <div>
-                <h3 className="text-lg font-semibold text-white">Subscribe to our newsletter</h3>
+                <h3 className="text-lg font-semibold text-white">Tilmeld dig forløbet</h3>
                 <p className="mt-2 text-gray-400">
-                  The latest news, articles, and resources, sent to your inbox weekly.
+                  Modtag en daglig AI udfordring i et år. Afmeld dig nårsomhelst. 100% gratis og spamfrit.
                 </p>
               </div>
               
@@ -611,7 +602,7 @@ export default function Example() {
           name="fields[email]"
           type="email"
           required
-          placeholder="Enter your email"
+          placeholder="Indtast din email"
           autoComplete="email"
           className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
           disabled={footerFormSubmitting}
@@ -621,7 +612,7 @@ export default function Example() {
           className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400"
           disabled={footerFormSubmitting}
         >
-          {footerFormSubmitting ? 'Sender...' : 'Subscribe'}
+          {footerFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
         </button>
       </div>
     </form>

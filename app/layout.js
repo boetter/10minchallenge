@@ -2,7 +2,7 @@ import './globals.css'
 import Script from 'next/script'
 
 export const metadata = {
-  title: '10 Min Challenge - Daglig AI træning',
+  title: 'Daglig gratis AI-træning',
   description: 'Sæt 10 minutter af i kalenderen hver dag til at træne dine AI færdigheder med daglige prompts',
 }
 
@@ -17,30 +17,18 @@ export default function RootLayout({ children }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* Favicon - Udfyld med din egen favicon-sti */}
-        <link rel="icon" href="/favicon.ico" />
-        
         {/* Open Graph / Facebook Meta Tags - Udfyld med dine egne oplysninger */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://dinwebside.dk/" />
-        <meta property="og:title" content="Her skal du skrive titel til sociale medier" />
-        <meta property="og:description" content="Her skal du skrive en kort, fængende beskrivelse til sociale medier" />
-        <meta property="og:image" content="https://dinwebside.dk/social-share-image.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:url" content="https://dagligprompt.boetter.dk/" />
+        <meta property="og:title" content="Gratis AI-træning af Jacob Bøtter" />
+        <meta property="og:description" content="Sæt 10 minutter i kalenderen til daglig AI-træning" />
+        <meta property="og:image" content="https://dagligprompt.boetter.dk/dark-project-app-screenshot.png" />
         <meta property="og:locale" content="da_DK" />
-        <meta property="og:site_name" content="10 Min Challenge" />
+        <meta property="og:site_name" content="Daglig AI-træning" />
         
-        {/* Twitter Meta Tags - Udfyld med dine egne oplysninger */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://dinwebside.dk/" />
-        <meta name="twitter:title" content="Her skal du skrive titel til Twitter/X" />
-        <meta name="twitter:description" content="Her skal du skrive en kort, fængende beskrivelse til Twitter/X" />
-        <meta name="twitter:image" content="https://dinwebside.dk/social-share-image.jpg" />
-        <meta name="twitter:creator" content="@ditTwitterHandle" />
         
         {/* Canonical Link - Udfyld med din website URL */}
-        <link rel="canonical" href="https://dinwebside.dk/" />
+        <link rel="canonical" href="https://dagligprompt.boetter.dk/" />
         
         {/* Andre SEO meta tags */}
         <meta name="author" content="Jacob Bøtter" />
@@ -54,10 +42,10 @@ export default function RootLayout({ children }) {
           {`
             {
               "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "10 Min Challenge",
-              "url": "https://dinwebside.dk/",
-              "description": "Daglig AI træning i 10 minutter",
+              "@type": "Website",
+              "name": "Daglig AI-træning",
+              "url": "https://dagligprompt.boetter.dk/",
+              "description": "Sæt 10 minutter i kalenderen til daglig AI-træning",
               "author": {
                 "@type": "Person",
                 "name": "Jacob Bøtter"

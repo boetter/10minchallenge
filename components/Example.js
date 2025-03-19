@@ -248,7 +248,7 @@ export default function Example() {
               <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
                 <div className="flex">
                   <div className="relative flex items-center gap-x-4 rounded-full bg-white px-4 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                    <span className="font-semibold text-indigo-600">Gratis e-mail kursus</span>
+                    <span className="font-semibold text-indigo-600">Gratis e-mailkursus</span>
                     <span aria-hidden="true" className="h-4 w-px bg-gray-900/10" />
                     <a href="#newsletter" className="flex items-center gap-x-1"
                                         onClick={(e) => {
@@ -487,7 +487,7 @@ export default function Example() {
              Samlet og skrevet af Jacob Bøtter
             </h1>
             <p className="mt-6 text-xl/8 text-balance text-gray-700">
-              Hej! Jeg hedder Jacob og bruger dagligt AI til at hjælpe mig med et utal af opgaver. Henover de sidste par år har jeg samlet på gode prompts og metoder til at få ægte værdi ud af AI. Gennem dette e-mail kursus kan du snuppe mine bedste metoder ganske gratis, dag for dag.
+              Hej! Jeg hedder Jacob og bruger dagligt AI til at hjælpe mig med et utal af opgaver. Henover de sidste par år har jeg samlet på gode prompts og metoder til at få ægte værdi ud af AI. Gennem dette e-mailkursus kan du snuppe mine bedste metoder ganske gratis, dag for dag.
             </p>
           </div>
           <section className="mt-20 grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-16">
@@ -541,7 +541,7 @@ export default function Example() {
               </div>
             </div>
             <div className="max-lg:mt-16 lg:col-span-1">
-              <p className="text-base/7 font-semibold text-gray-500">Et langt e-mail kursus</p>
+              <p className="text-base/7 font-semibold text-gray-500">Et langt e-mailkursus</p>
               <hr className="mt-6 border-t border-gray-200" />
               <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
 
@@ -577,7 +577,7 @@ export default function Example() {
               <div>
                 <h3 className="text-lg font-semibold text-white">Tilmeld dig forløbet</h3>
                 <p className="mt-2 text-gray-400">
-                  Modtag en daglig AI udfordring i et år. Afmeld dig nårsomhelst. 100% gratis og spamfrit.
+                  Modtag en daglig AI-udfordring i et år. Afmeld dig nårsomhelst. 100% gratis og spamfrit.
                 </p>
               </div>
               

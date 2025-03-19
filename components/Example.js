@@ -16,17 +16,17 @@ import {
 const primaryFeatures = [
   {
     name: 'Skriv bedre og bliv mere kreativ.',
-    description: 'Prompts der hjælper dig med at skrive, oversætte eller redigere tekster. Prompts der udfordrer dig til at se nye kreative løsninger.',
+    description: 'Prompts der hjælper dig med at skrive, oversætte og redigere tekster. Metoder der kan inspirere dig til at finde nye kreative løsninger.',
     icon: DocumentTextIcon,
   },
   {
-    name: 'Tonsvis af forretningsmodeller og hacks.',
-    description: 'Prompts der giver dig en managementkonsulent ved din side der utrætteligt hjælper dig med at løse problemer.',
+    name: 'Forretningsmodeller og effektive hacks.',
+    description: 'Prompts der fungerer som din egen managementkonsulent, klar til at hjælpe dig med at løse komplekse problemer på jobbet.',
     icon: LightBulbIcon,
   },
   {
     name: 'Få styr på data og kode.',
-    description: 'Lær at bruge prompts der hjælper i Excel eller skriver reel kildekode for dig.',
+    description: 'Lær at bruge prompts, der gør dig stærkere i Excel eller genererer decideret kildekode, der kan hjælpe dig.',
     icon: CommandLineIcon,
   },
 ]
@@ -35,21 +35,21 @@ const secondaryFeatures = [
   {
     name: 'Prøv mange forskellige prompts',
     description:
-      'Med mange forskellige prompts lærer du hvordan du selv kan skrive bedre prompts. Ved at se hvordan AI-værktøjet reagerer på forskellige input, bliver du bedre til selv at formulere dine spørgsmål.',
+      'Ved at eksperimentere med mange forskellige prompts lærer du hurtigt selv at skrive bedre prompts. Jo flere slags du prøver, desto bedre bliver du til at få AI til at forstå dine behov.',
     href: '#',
     icon: SparklesIcon,
   },
   {
     name: 'Brug AI hver dag',
     description:
-      'Daglig træning er nøglen til at drage maksimal nytte af AI. Ved at integrere AI i din daglige rutine, opbygger du både forståelse og erfaring, som gør dig til en mere effektiv AI-bruger.',
+      'Daglig træning er nøglen til maksimal nytte af AI. Når du integrerer AI i din daglige rutine, opbygger du både en forståelse og erfaring, som du kan bruge fremover med nye AI-værktøjer.',
     href: '#',
     icon: CalendarIcon,
   },
   {
     name: 'Fra stavekontrol til ny kollega',
     description:
-      'AI kan starte som et simpelt værktøj til at tjekke stavning, men over tid kan det blive en værdifuld samarbejdspartner. Jo mere du træner, jo bedre bliver AI-værktøjet til at forstå dine behov og levere resultater.',
+      'AI begynder måske som en simpel stavekontrol, men med regelmæssig træning udvikler AI sig til en uvurderlig samarbejdspartner, der både kan hjælpe dig og udfordre dig.',
     href: '#',
     icon: UserGroupIcon,
   },
@@ -266,7 +266,7 @@ export default function Example() {
                   Sæt 10 minutter i kalenderen til daglig AI træning
                 </h1>
                 <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                  Du bruger ChatGPT til at rette dine stavefejl og måske skrive en fest-sang. Men hvis du vil virkelig vil løfte dit arbejde med AI kræver det en dedikeret indsats at udforske mulighederne.
+                Du bruger måske allerede ChatGPT til at rette stavefejl eller skrive en sjov festsang. Men hvis du virkelig ønsker at løfte dit arbejde med AI, kræver det en målrettet indsats at ændre vaner og lære nye metoder.
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
                   <a
@@ -382,7 +382,7 @@ export default function Example() {
               Du skal ændre vaner for at få glæde af AI
             </p>
             <p className="mt-6 text-lg/8 text-gray-600">
-              AI handler egentlig ikke om teknologi. Du kan ikke bare købe ChatGPT eller Claude og forvente at du pludselig bliver meget bedre til dit arbejde. Det kræver en fokuseret indsats at ændre vaner, men gevinsten er stor på den anden side!
+            AI handler ikke kun om teknologi. Du bliver ikke automatisk bedre til dit arbejde blot ved at købe adgang til ChatGPT eller Claude. Værdien kommer når du ændrer dine vaner og lærer at bruge AI i dine daglige rutiner.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
@@ -487,14 +487,14 @@ export default function Example() {
              Samlet og skrevet af Jacob Bøtter
             </h1>
             <p className="mt-6 text-xl/8 text-balance text-gray-700">
-              Hej! Jeg hedder Jacob og bruger dagligt AI til at hjælpe mig med et utal af opgaver. Henover de sidste par år har jeg samlet på gode prompts og metoder til at få ægte værdi ud af AI. Gennem dette e-mailkursus kan du snuppe mine bedste metoder ganske gratis, dag for dag.
+            Hej! Jeg hedder Jacob og bruger AI hver dag til en lang række opgaver. Gennem årene har jeg samlet prompts og metoder til at få mere værdi af min AI-anvendelse. I dette gratis e-mailkursus deler jeg mine mest effektive metoder med dig. Dag for dag.
             </p>
           </div>
           <section className="mt-20 grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-16">
             <div className="lg:pr-8">
               <h2 className="text-2xl font-semibold tracking-tight text-pretty text-gray-900">Min baggrund</h2>
               <p className="mt-6 text-base/7 text-gray-600">
-                Jeg har brugt de sidste 20 år på forkant med den digitale udvikling. Skrevet fem bøger om ledelse og teknologi. Rådgivet hundredevis af virksomheder og ledere i hvordan ny teknologi kan skabe bedre arbejdspladser.
+                Jeg har brugt de sidste 20 år på forkant med den digitale udvikling. Jeg har skrevet fem bøger om ledelse og teknologi og rådgivet hundredvis af virksomheder og ledere i, hvordan ny teknologi kan skabe bedre arbejdspladser.
               </p>
               <p className="mt-8 text-base/7 text-gray-600">
                 I flere virksomheder har jeg været med til at implementere AI-værktøjer og trænet medarbejdere. Her bliver det tydeligt at et traditionelt kursus kommer til kort når medarbejderen kommer tilbage til pinden og glemmer alt. Der skal ændres vaner, læres nye metoder og hver eneste dag trænes. Derfor har jeg lavet dette brevkursus helt gratis for at finde ud af om det virker – og fordi alle har brug for at lære at mestre AI.
@@ -577,7 +577,7 @@ export default function Example() {
               <div>
                 <h3 className="text-lg font-semibold text-white">Tilmeld dig forløbet</h3>
                 <p className="mt-2 text-gray-400">
-                  Modtag en daglig AI-udfordring i et år. Afmeld dig nårsomhelst. 100% gratis og spamfrit.
+                Modtag en daglig AI-udfordring i et år. Du kan afmelde dig når som helst. 100% gratis og spamfrit.
                 </p>
               </div>
               

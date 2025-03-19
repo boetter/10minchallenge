@@ -16,17 +16,17 @@ import {
 const primaryFeatures = [
   {
     name: 'Skriv bedre og bliv mere kreativ.',
-    description: 'Prompts der hjælper dig med at skrive, oversætte og redigere tekster. Metoder der kan inspirere dig til at finde nye kreative løsninger.',
+    description: 'Prompts, der hjælper dig med at skrive, oversætte og redigere tekster. Metoder, der kan inspirere dig til at finde nye kreative løsninger.',
     icon: DocumentTextIcon,
   },
   {
     name: 'Forretningsmodeller og effektive hacks.',
-    description: 'Prompts der fungerer som din egen managementkonsulent, klar til at hjælpe dig med at løse komplekse problemer på jobbet.',
+    description: 'Prompts, der fungerer som din egen managementkonsulent. Klar til at hjælpe dig med at løse komplekse problemer på jobbet.',
     icon: LightBulbIcon,
   },
   {
     name: 'Få styr på data og kode.',
-    description: 'Lær at bruge prompts, der gør dig stærkere i Excel eller genererer decideret kildekode, der kan hjælpe dig.',
+    description: 'Lær at bruge prompts, der gør dig stærkere i Excel eller genererer decideret kildekode, du kan bruge.',
     icon: CommandLineIcon,
   },
 ]
@@ -263,7 +263,7 @@ export default function Example() {
                   </div>
                 </div>
                 <h1 className="mt-10 text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl">
-                  Sæt 10 minutter i kalenderen til daglig AI træning
+                  Sæt 10 minutter i kalenderen til daglig AI-træning
                 </h1>
                 <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
                 Du bruger måske allerede ChatGPT til at rette stavefejl eller skrive en sjov festsang. Men hvis du virkelig ønsker at løfte dit arbejde med AI, kræver det en målrettet indsats at ændre vaner og lære nye metoder.
@@ -335,7 +335,7 @@ export default function Example() {
                   Modtag en ny prompt hver dag og afprøv den i dit AI-værktøj.
                 </h2>
                 <p className="mt-6 text-lg/8 text-gray-300">
-                  Træningen løber henover et år. Hver dag vil du på mail modtage en prompt du nemt kan kopiere ind i ChatGPT, Copilot, Claude eller hvad du end måtte bruge.
+                  Træningen løber henover et år. Hver dag vil du på mail modtage en prompt, du nemt kan kopiere ind i ChatGPT, Copilot, Claude eller hvad du end måtte bruge.
                 </p>
               </div>
               <img
@@ -382,7 +382,7 @@ export default function Example() {
               Du skal ændre vaner for at få glæde af AI
             </p>
             <p className="mt-6 text-lg/8 text-gray-600">
-            AI handler ikke kun om teknologi. Du bliver ikke automatisk bedre til dit arbejde blot ved at købe adgang til ChatGPT eller Claude. Værdien kommer når du ændrer dine vaner og lærer at bruge AI i dine daglige rutiner.
+            AI handler ikke kun om teknologi. Du bliver ikke automatisk bedre til dit arbejde blot ved at købe adgang til ChatGPT eller Claude. Værdien kommer, når du ændrer dine vaner og lærer at bruge AI i dine daglige rutiner.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
@@ -409,7 +409,7 @@ export default function Example() {
       Start din træning i dag
     </h2>
     <p className="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
-      Du kan til enhver tid afmelde dig forløbet igen og du modtager ikke andet end en daglig AI-udfordring. Når der er gået et år stopper det automatisk. Ingen reklamer eller spam.
+      Du kan til enhver tid afmelde dig forløbet igen, og du modtager ikke andet end en daglig AI-udfordring. Når der er gået et år, stopper det automatisk. Ingen reklamer eller spam.
     </p>
     
     {/* MailerLite form - opdateret implementation */}
@@ -487,7 +487,7 @@ export default function Example() {
              Samlet og skrevet af Jacob Bøtter
             </h1>
             <p className="mt-6 text-xl/8 text-balance text-gray-700">
-            Hej! Jeg hedder Jacob og bruger AI hver dag til en lang række opgaver. Gennem årene har jeg samlet prompts og metoder til at få mere værdi af min AI-anvendelse. I dette gratis e-mailkursus deler jeg mine mest effektive metoder med dig. Dag for dag.
+            Hej! Jeg hedder Jacob, og hver dag bruger jeg AI til en lang række opgaver. Gennem årene har jeg samlet prompts og metoder til at få mere værdi af min AI-anvendelse. I dette gratis e-mailkursus deler jeg mine mest effektive metoder med dig. Hver dag.
             </p>
           </div>
           <section className="mt-20 grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-16">
@@ -497,14 +497,14 @@ export default function Example() {
                 Jeg har brugt de sidste 20 år på forkant med den digitale udvikling. Jeg har skrevet fem bøger om ledelse og teknologi og rådgivet hundredvis af virksomheder og ledere i, hvordan ny teknologi kan skabe bedre arbejdspladser.
               </p>
               <p className="mt-8 text-base/7 text-gray-600">
-                I flere virksomheder har jeg været med til at implementere AI-værktøjer og trænet medarbejdere. Her bliver det tydeligt at et traditionelt kursus kommer til kort når medarbejderen kommer tilbage til pinden og glemmer alt. Der skal ændres vaner, læres nye metoder og hver eneste dag trænes. Derfor har jeg lavet dette brevkursus helt gratis for at finde ud af om det virker – og fordi alle har brug for at lære at mestre AI.
+                I flere virksomheder har jeg været med til at implementere AI-værktøjer og træne medarbejdere. Her bliver det tydeligt at et traditionelt kursus er utilstrækkeligt, da medarbejderen ofte kommer tilbage til pinden og glemmer guldkornene fra kurset. Der skal ændres vaner og læres nye metoder, og det skal trænes hver eneste dag. Derfor har jeg lavet dette gratis brevkursus for at gøre det let for dig at få trænet hver dag.
               </p>
             </div>
             <div className="pt-16 lg:row-span-2 lg:-mr-16 xl:mr-auto">
               <div className="-mx-8 grid grid-cols-2 gap-4 sm:-mx-16 sm:grid-cols-4 lg:mx-0 lg:grid-cols-2 lg:gap-4 xl:gap-8">
                 <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
                   <img
-                    alt="Person arbejder med AI på computer"
+                    alt="Jacob Bøtter"
                     src="/1.jpg"
                     className="block size-full object-cover"
                     width="560"
@@ -513,7 +513,7 @@ export default function Example() {
                 </div>
                 <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40">
                   <img
-                    alt="Moderne kontor med teknologi"
+                    alt="Jacob Bøtter"
                     src="/2.jpg"
                     className="block size-full object-cover"
                     width="560"
@@ -522,7 +522,7 @@ export default function Example() {
                 </div>
                 <div className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10">
                   <img
-                    alt="Kreativt samarbejde med AI"
+                    alt="Jacob Bøtter"
                     src="/3.jpg"
                     className="block size-full object-cover"
                     width="560"
@@ -531,7 +531,7 @@ export default function Example() {
                 </div>
                 <div className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40">
                   <img
-                    alt="Innovation og kreativitet"
+                    alt="Jacob Bøtter"
                     src="/4.jpg"
                     className="block size-full object-cover"
                     width="560"
@@ -541,26 +541,25 @@ export default function Example() {
               </div>
             </div>
             <div className="max-lg:mt-16 lg:col-span-1">
-              <p className="text-base/7 font-semibold text-gray-500">Et langt e-mailkursus</p>
+              <p className="text-base/7 font-semibold text-gray-500">En nem måde at komme i gang med AI</p>
               <hr className="mt-6 border-t border-gray-200" />
               <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
-
+              <div className="flex flex-col gap-y-2">
+                  <dt className="text-sm/6 text-gray-600">Metoder & prompts</dt>
+                  <dd className="order-first text-6xl font-semibold tracking-tight">
+                    <span>365</span>
+                  </dd>
+                </div>
                 <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm/6 text-gray-600">Minutter skal du bruge hver dag</dt>
+                  <dt className="text-sm/6 text-gray-600">Minutters daglig træning</dt>
                   <dd className="order-first text-6xl font-semibold tracking-tight">
                     <span>10</span>
                   </dd>
                 </div>
                 <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm/6 text-gray-600">Timer skal du investere</dt>
+                  <dt className="text-sm/6 text-gray-600">Timers samlet investering</dt>
                   <dd className="order-first text-6xl font-semibold tracking-tight">
                     <span>60</span>
-                  </dd>
-                </div>
-                <div className="flex flex-col gap-y-2">
-                  <dt className="text-sm/6 text-gray-600">Forskellige metoder & prompts</dt>
-                  <dd className="order-first text-6xl font-semibold tracking-tight">
-                    <span>365</span>
                   </dd>
                 </div>
               </dl>

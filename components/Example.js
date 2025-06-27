@@ -57,6 +57,10 @@ const secondaryFeatures = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  // State til at styre visningen af formular, succes- og fejlbeskeder
+  const [formState, setFormState] = useState({ status: 'idle', message: '', formKey: 'main' });
+  const [footerFormState, setFooterFormState] = useState({ status: 'idle', message: '' });
+
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -69,10 +73,121 @@ export default function Example() {
       });
     }
   };
+  
+  // Genbruelig funktion til at håndtere formularafsendelse
+  const handleFormSubmit = async (e, formType) => {
+    e.preventDefault(); // Forhindrer browserens standard-afsendelse
+    
+    const currentFormStateSetter = formType === 'footer' ? setFooterFormState : setFormState;
+    currentFormStateSetter({ status: 'submitting', message: '' });
+
+    const email = e.target.elements['fields[email]'].value;
+    if (!email || !email.includes('@')) {
+      currentFormStateSetter({ status: 'error', message: 'Indtast venligst en gyldig email adresse.' });
+      return;
+    }
+
+    const formData = new FormData(e.target);
+    const data = new URLSearchParams(formData);
+
+    try {
+      const response = await fetch('https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe', {
+        method: 'POST',
+        body: data,
+        // Vi undlader 'Content-Type' headeren, så browseren selv kan sætte den korrekt for FormData
+      });
+      
+      const textResponse = await response.text();
+      // MailerLites JSONP-endepunkt er ikke standard JSON, så vi tjekker for success-strengen
+      if (textResponse.includes('"success":true')) {
+        currentFormStateSetter({ status: 'success', message: 'Tak for din tilmelding!' });
+      } else {
+        // Forsøger at parse en eventuel fejlbesked fra svaret
+        try {
+            const errorData = JSON.parse(textResponse.match(/{.*}/s)[0]);
+            currentFormStateSetter({ status: 'error', message: errorData.errors?.fields.email[0] || 'Der opstod en fejl. Prøv igen.' });
+        } catch {
+            currentFormStateSetter({ status: 'error', message: 'Der opstod en ukendt fejl. Prøv igen.' });
+        }
+      }
+    } catch (error) {
+      currentFormStateSetter({ status: 'error', message: 'Teknisk fejl. Tjek din internetforbindelse og prøv igen.' });
+      console.error("MailerLite request failed:", error);
+    }
+  };
+
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
+
+  // Komponent til at rendere formular eller succes/fejl-besked
+  const NewsletterForm = ({ formType = 'main' }) => {
+    const state = formType === 'footer' ? footerFormState : formState;
+    const setState = formType === 'footer' ? setFooterFormState : setFormState;
+
+    if (state.status === 'success') {
+      return (
+        <div className="text-center py-4 px-3 bg-white/10 rounded-md">
+          <p className="text-white font-medium">{state.message}</p>
+        </div>
+      );
+    }
+
+    const isSubmitting = state.status === 'submitting';
+    
+    // Unik key til at nulstille formularen efter fejl
+    const formKey = formType + state.status;
+
+    return (
+        <div className="mx-auto max-w-md">
+          <form 
+            key={formKey}
+            onSubmit={(e) => handleFormSubmit(e, formType)}
+            className={formType === 'footer' ? "flex flex-col sm:flex-row w-full gap-3" : "flex gap-x-4"}
+          >
+            <input type="hidden" name="ml-submit" value="1" />
+            <input type="hidden" name="anticsrf" value="true" />
+            
+            <label htmlFor={`${formType}-email-address`} className="sr-only">
+              Email address
+            </label>
+            <input
+              id={`${formType}-email-address`}
+              name="fields[email]"
+              type="email"
+              required
+              placeholder="Indtast din email"
+              autoComplete="email"
+              className={formType === 'footer' 
+                ? "min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
+                : "min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+              }
+              disabled={isSubmitting}
+            />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={formType === 'footer'
+                ? "flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:opacity-50"
+                : "flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-50"
+              }
+            >
+              {isSubmitting ? 'Sender...' : 'Tilmeld mig'}
+            </button>
+          </form>
+          {state.status === 'error' && (
+            <p className="mt-2 text-sm text-red-400 text-center">
+              {state.message}
+            </p>
+          )}
+          <p className="mt-2 text-xs text-gray-400 text-center">
+             Tilmeldingen behandles af MailerLite
+          </p>
+        </div>
+    );
+  };
+
 
   return (
     <div className="bg-white">
@@ -299,46 +414,7 @@ export default function Example() {
             </p>
             
             <div className="mx-auto mt-10 max-w-md">
-              <form 
-                action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                method="post" 
-                target="_blank"
-                className="flex gap-x-4"
-                onSubmit={(e) => {
-                  const email = e.target.elements['fields[email]'].value;
-                  if (!email || !email.includes('@')) {
-                    e.preventDefault();
-                    alert('Indtast venligst en gyldig email adresse');
-                    return false;
-                  }
-                }}
-              >
-                <input type="hidden" name="ml-submit" value="1" />
-                <input type="hidden" name="anticsrf" value="true" />
-                
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="fields[email]"
-                  type="email"
-                  required
-                  placeholder="Indtast din email"
-                  autoComplete="email"
-                  className="min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
-                />
-                <button
-                  type="submit"
-                  className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Tilmeld mig
-                </button>
-              </form>
-              
-              <p className="mt-2 text-xs text-gray-400 text-center">
-                Tilmeldingen behandles af MailerLite
-              </p>
+                <NewsletterForm formType="main" />
             </div>
             
             <svg
@@ -467,45 +543,7 @@ export default function Example() {
               </div>
               
               <div className="mt-8 md:mt-0">
-                <form 
-                  action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                  method="post" 
-                  target="_blank"
-                  className="flex flex-col sm:flex-row sm:gap-x-4"
-                  onSubmit={(e) => {
-                    const email = e.target.elements['fields[email]'].value;
-                    if (!email || !email.includes('@')) {
-                      e.preventDefault();
-                      alert('Indtast venligst en gyldig email adresse');
-                      return false;
-                    }
-                  }}
-                >
-                  <input type="hidden" name="ml-submit" value="1" />
-                  <input type="hidden" name="anticsrf" value="true" />
-                  
-                  <div className="flex flex-col sm:flex-row w-full gap-3">
-                    <input
-                      id="footer-email"
-                      name="fields[email]"
-                      type="email"
-                      required
-                      placeholder="Indtast din email"
-                      autoComplete="email"
-                      className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
-                    />
-                    <button
-                      type="submit"
-                      className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400"
-                    >
-                      Tilmeld mig
-                    </button>
-                  </div>
-                </form>
-                
-                <p className="mt-2 text-xs text-gray-400 text-center">
-                  Behandles af MailerLite
-                </p>
+                  <NewsletterForm formType="footer" />
               </div>
             </div>
           </div>

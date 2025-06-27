@@ -76,43 +76,30 @@ export default function Example() {
   
   // Genbruelig funktion til at håndtere formularafsendelse
   const handleFormSubmit = async (e, formType) => {
-    e.preventDefault(); // Forhindrer browserens standard-afsendelse
+    e.preventDefault();
     
     const currentFormStateSetter = formType === 'footer' ? setFooterFormState : setFormState;
     currentFormStateSetter({ status: 'submitting', message: '' });
 
-    const email = e.target.elements['fields[email]'].value;
-    if (!email || !email.includes('@')) {
-      currentFormStateSetter({ status: 'error', message: 'Indtast venligst en gyldig email adresse.' });
-      return;
-    }
-
     const formData = new FormData(e.target);
-    const data = new URLSearchParams(formData);
-
+    
     try {
-      const response = await fetch('https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe', {
+      // OPDATERET: Sender nu til din egen API-rute
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
-        body: data,
-        // Vi undlader 'Content-Type' headeren, så browseren selv kan sætte den korrekt for FormData
+        body: formData,
       });
       
-      const textResponse = await response.text();
-      // MailerLites JSONP-endepunkt er ikke standard JSON, så vi tjekker for success-strengen
-      if (textResponse.includes('"success":true')) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         currentFormStateSetter({ status: 'success', message: 'Tak for din tilmelding!' });
       } else {
-        // Forsøger at parse en eventuel fejlbesked fra svaret
-        try {
-            const errorData = JSON.parse(textResponse.match(/{.*}/s)[0]);
-            currentFormStateSetter({ status: 'error', message: errorData.errors?.fields.email[0] || 'Der opstod en fejl. Prøv igen.' });
-        } catch {
-            currentFormStateSetter({ status: 'error', message: 'Der opstod en ukendt fejl. Prøv igen.' });
-        }
+        currentFormStateSetter({ status: 'error', message: data.message || 'Der opstod en fejl. Prøv igen.' });
       }
     } catch (error) {
       currentFormStateSetter({ status: 'error', message: 'Teknisk fejl. Tjek din internetforbindelse og prøv igen.' });
-      console.error("MailerLite request failed:", error);
+      console.error("Request to own API failed:", error);
     }
   };
 
@@ -124,7 +111,6 @@ export default function Example() {
   // Komponent til at rendere formular eller succes/fejl-besked
   const NewsletterForm = ({ formType = 'main' }) => {
     const state = formType === 'footer' ? footerFormState : formState;
-    const setState = formType === 'footer' ? setFooterFormState : setFormState;
 
     if (state.status === 'success') {
       return (
@@ -135,8 +121,6 @@ export default function Example() {
     }
 
     const isSubmitting = state.status === 'submitting';
-    
-    // Unik key til at nulstille formularen efter fejl
     const formKey = formType + state.status;
 
     return (

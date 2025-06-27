@@ -300,12 +300,12 @@ export default function Example() {
             
             <div className="mx-auto mt-10 max-w-md">
               <form 
-                action="https://dashboard.mailerlite.com/forms/789462/149197210107512439/share" 
-                method="get" 
+                action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+                method="post" 
                 target="_blank"
                 className="flex gap-x-4"
                 onSubmit={(e) => {
-                  const email = e.target.elements.email.value;
+                  const email = e.target.elements['fields[email]'].value;
                   if (!email || !email.includes('@')) {
                     e.preventDefault();
                     alert('Indtast venligst en gyldig email adresse');
@@ -313,12 +313,15 @@ export default function Example() {
                   }
                 }}
               >
+                <input type="hidden" name="ml-submit" value="1" />
+                <input type="hidden" name="anticsrf" value="true" />
+                
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
                 <input
                   id="email-address"
-                  name="email"
+                  name="fields[email]"
                   type="email"
                   required
                   placeholder="Indtast din email"
@@ -334,7 +337,7 @@ export default function Example() {
               </form>
               
               <p className="mt-2 text-xs text-gray-400 text-center">
-                Tilmeldingen åbner i et nyt vindue
+                Tilmeldingen behandles af MailerLite
               </p>
             </div>
             
@@ -465,12 +468,12 @@ export default function Example() {
               
               <div className="mt-8 md:mt-0">
                 <form 
-                  action="https://dashboard.mailerlite.com/forms/789462/149197210107512439/share" 
-                  method="get" 
+                  action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+                  method="post" 
                   target="_blank"
                   className="flex flex-col sm:flex-row sm:gap-x-4"
                   onSubmit={(e) => {
-                    const email = e.target.elements.email.value;
+                    const email = e.target.elements['fields[email]'].value;
                     if (!email || !email.includes('@')) {
                       e.preventDefault();
                       alert('Indtast venligst en gyldig email adresse');
@@ -478,10 +481,13 @@ export default function Example() {
                     }
                   }}
                 >
+                  <input type="hidden" name="ml-submit" value="1" />
+                  <input type="hidden" name="anticsrf" value="true" />
+                  
                   <div className="flex flex-col sm:flex-row w-full gap-3">
                     <input
                       id="footer-email"
-                      name="email"
+                      name="fields[email]"
                       type="email"
                       required
                       placeholder="Indtast din email"
@@ -498,7 +504,7 @@ export default function Example() {
                 </form>
                 
                 <p className="mt-2 text-xs text-gray-400 text-center">
-                  Åbner tilmelding i nyt vindue
+                  Behandles af MailerLite
                 </p>
               </div>
             </div>

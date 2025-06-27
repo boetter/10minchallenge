@@ -165,18 +165,8 @@ export default function Example() {
     } catch (error) {
       console.error('❌ Form submission failed:', error);
       
-      // Fallback: Redirect til MailerLite landing page
-      const fallbackUrl = `https://landing.mailerlite.com/webforms/landing/p8m1z1?fields[email]=${encodeURIComponent(email)}`;
-      
-      if (confirm('Der opstod en teknisk fejl. Vil du åbne tilmeldingen i et nyt vindue?')) {
-        window.open(fallbackUrl, '_blank');
-        
-        if (formType === 'main') {
-          setMainFormSuccess(true);
-        } else {
-          setFooterFormSuccess(true);
-        }
-      }
+      // Vis fejlbesked og reset form
+      alert('Der opstod en teknisk fejl. Prøv venligst igen om lidt.');
       
       // Reset loading state
       if (formType === 'main') {
@@ -453,20 +443,7 @@ export default function Example() {
                     </button>
                   </form>
                   
-                  {/* Backup link for CSP-blocked users */}
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-gray-400">
-                      Problemer med tilmelding?{' '}
-                      <a 
-                        href="https://landing.mailerlite.com/webforms/landing/p8m1z1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-400 hover:text-indigo-300 underline"
-                      >
-                        Klik her for at tilmelde dig
-                      </a>
-                    </p>
-                  </div>
+
                 </>
               )}
             </div>
@@ -632,18 +609,7 @@ export default function Example() {
                         </button>
                       </div>
                     </form>
-                    
-                    {/* Backup link for CSP issues */}
-                    <div className="mt-3 text-center">
-                      <a 
-                        href="https://landing.mailerlite.com/webforms/landing/p8m1z1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-gray-400 hover:text-gray-300 underline"
-                      >
-                        Alternative tilmelding
-                      </a>
-                    </div>
+
                   </>
                 )}
               </div>

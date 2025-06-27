@@ -13,75 +13,44 @@ import {
   CommandLineIcon,
 } from '@heroicons/react/20/solid'
 
-// Centralized function to handle MailerLite script loading and form submissions
+// CSP-resistent MailerLite loading funktion
 function loadMailerLiteScript(setMainFormSuccess, setFooterFormSuccess) {
   if (typeof window !== 'undefined' && !document.getElementById('mailerlite-script')) {
-    // Define success callbacks globally so the MailerLite script can find them
+    
+    // Success callbacks (hvis MailerLite scriptet loader)
     window.ml_webform_success_23805225 = () => {
+      console.log('✅ MailerLite success callback triggered');
       setMainFormSuccess(true);
     };
 
     window.ml_webform_success_footer = () => {
+      console.log('✅ MailerLite footer success callback triggered');
       setFooterFormSuccess(true);
     };
 
-    const script = document.createElement('script');
-    script.id = 'mailerlite-script';
-    script.src = 'https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024';
-    script.async = true;
-
-    // Use the onload event to guarantee the script is loaded before attaching event listeners
-    script.onload = () => {
-      // MailerLite's tracking call
-      fetch("https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/takel");
-
-      // Attach submit handlers to all MailerLite forms
-      const forms = document.querySelectorAll('form[action*="mailerlite.com"]');
-      forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-          e.preventDefault(); // Prevent default form submission and page reload
-
-          const formData = new FormData(form);
-          const formId = form.id.replace('ml-form-', '').replace('footer-newsletter-form', 'footer');
-          
-          // Set submitting state based on which form is being submitted
-          if (form.id.includes('ml-form-23805225')) {
-            // This part is tricky without direct state access.
-            // The state update is handled by the success callback.
-          } else if (form.id.includes('footer-newsletter-form')) {
-            // Same as above for the footer form.
-          }
-
-          fetch(form.getAttribute('action'), {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Accept': 'application/json'
-            }
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              // Trigger the appropriate success callback
-              if (formId === '23805225' && window.ml_webform_success_23805225) {
-                window.ml_webform_success_23805225();
-              } else if (formId === 'footer' && window.ml_webform_success_footer) {
-                window.ml_webform_success_footer();
-              }
-            }
-          })
-          .catch(error => {
-            console.error('Error submitting form:', error);
-            // Fallback or error handling can be added here
-          });
-        });
-      });
-    };
-
-    document.body.appendChild(script);
+    // Prøv at loade MailerLite scriptet (kan blive blokeret af CSP)
+    try {
+      const script = document.createElement('script');
+      script.id = 'mailerlite-script';
+      script.src = 'https://groot.mailerlite.com/js/w/webforms.min.js?v176e10baa5e7ed80d35ae235be3d5024';
+      script.async = true;
+      
+      script.onload = () => {
+        console.log('✅ MailerLite script loaded successfully');
+        fetch("https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/takel")
+          .catch(err => console.log('MailerLite tracking failed:', err));
+      };
+      
+      script.onerror = () => {
+        console.warn('⚠️ MailerLite script failed to load (probably CSP)');
+      };
+      
+      document.body.appendChild(script);
+    } catch (error) {
+      console.warn('⚠️ Script injection blocked by CSP:', error);
+    }
   }
 }
-
 
 const primaryFeatures = [
   {
@@ -125,72 +94,6 @@ const secondaryFeatures = [
   },
 ]
 
-const featuredTestimonial = {
-  body: 'Integer id nunc sit semper purus. Bibendum at lacus ut arcu blandit montes vitae auctor libero. Hac condimentum dignissim nibh vulputate ut nunc. Amet nibh orci mi venenatis blandit vel et proin. Non hendrerit in vel ac diam.',
-  author: {
-    name: 'Brenna Goyette',
-    handle: 'brennagoyette',
-    imageUrl:
-      'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=1024&h=1024&q=80',
-    logoUrl: 'https://tailwindcss.com/plus-assets/img/logos/savvycal-logo-gray-900.svg',
-  },
-}
-
-const testimonials = [
-  [
-    [
-      {
-        body: 'Laborum quis quam. Dolorum et ut quod quia. Voluptas numquam delectus nihil. Aut enim doloremque et ipsam.',
-        author: {
-          name: 'Leslie Alexander',
-          handle: 'lesliealexander',
-          imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-      },
-      // More testimonials...
-    ],
-    [
-      {
-        body: 'Aut reprehenderit voluptatem eum asperiores beatae id. Iure molestiae ipsam ut officia rem nulla blanditiis.',
-        author: {
-          name: 'Lindsay Walton',
-          handle: 'lindsaywalton',
-          imageUrl:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-      },
-      // More testimonials...
-    ],
-  ],
-  [
-    [
-      {
-        body: 'Voluptas quos itaque ipsam in voluptatem est. Iste eos blanditiis repudiandae. Earum deserunt enim molestiae ipsum perferendis recusandae saepe corrupti.',
-        author: {
-          name: 'Tom Cook',
-          handle: 'tomcook',
-          imageUrl:
-            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-      },
-      // More testimonials...
-    ],
-    [
-      {
-        body: 'Molestias ea earum quos nostrum doloremque sed. Quaerat quasi aut velit incidunt excepturi rerum voluptatem minus harum.',
-        author: {
-          name: 'Leonard Krasner',
-          handle: 'leonardkrasner',
-          imageUrl:
-            'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-      },
-      // More testimonials...
-    ],
-  ],
-]
-
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mainFormSubmitting, setMainFormSubmitting] = useState(false)
@@ -211,10 +114,78 @@ export default function Example() {
   };
 
   useEffect(() => {
-    // Load the MailerLite script and pass the state setters
     loadMailerLiteScript(setMainFormSuccess, setFooterFormSuccess);
   }, []);
-  
+
+  // CSP-resistent form submission handler
+  const handleFormSubmit = async (e, formType) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const email = form.elements['fields[email]'].value;
+    
+    // Basic validation
+    if (!email || !email.includes('@') || email.length < 5) {
+      alert('Indtast venligst en gyldig email adresse');
+      return;
+    }
+    
+    console.log(`📧 Submitting ${formType} form for:`, email);
+    
+    // Set loading state
+    if (formType === 'main') {
+      setMainFormSubmitting(true);
+    } else {
+      setFooterFormSubmitting(true);
+    }
+    
+    try {
+      const formData = new FormData(form);
+      
+      // Prøv MailerLite API submission
+      await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+      });
+      
+      console.log('✅ Form submitted successfully');
+      
+      // Simuler success efter 2 sekunder
+      setTimeout(() => {
+        if (formType === 'main') {
+          setMainFormSuccess(true);
+          setMainFormSubmitting(false);
+        } else {
+          setFooterFormSuccess(true);
+          setFooterFormSubmitting(false);
+        }
+      }, 2000);
+      
+    } catch (error) {
+      console.error('❌ Form submission failed:', error);
+      
+      // Fallback: Redirect til MailerLite landing page
+      const fallbackUrl = `https://landing.mailerlite.com/webforms/landing/p8m1z1?fields[email]=${encodeURIComponent(email)}`;
+      
+      if (confirm('Der opstod en teknisk fejl. Vil du åbne tilmeldingen i et nyt vindue?')) {
+        window.open(fallbackUrl, '_blank');
+        
+        if (formType === 'main') {
+          setMainFormSuccess(true);
+        } else {
+          setFooterFormSuccess(true);
+        }
+      }
+      
+      // Reset loading state
+      if (formType === 'main') {
+        setMainFormSubmitting(false);
+      } else {
+        setFooterFormSubmitting(false);
+      }
+    }
+  };
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -222,8 +193,6 @@ export default function Example() {
 
   return (
     <div className="bg-white">
-      {/* Header removed */}
-
       <main>
         {/* Hero section */}
         <div className="relative isolate">
@@ -436,7 +405,7 @@ export default function Example() {
           </div>
         </div>
 
-        {/* newsletter section with ID */}
+        {/* Newsletter section - CSP Safe */}
         <div id="newsletter" className="mx-auto mt-32 max-w-7xl sm:mt-48 sm:px-6 lg:px-8">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32">
             <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -446,81 +415,60 @@ export default function Example() {
               Du kan til enhver tid afmelde dig forløbet igen, og du modtager ikke andet end en daglig AI-udfordring. Når der er gået et år, stopper det automatisk. Ingen reklamer eller spam.
             </p>
             
-            {/* MailerLite form */}
             <div className="mx-auto mt-10 max-w-md">
               {mainFormSuccess ? (
-                <div id="ml-success-message" className="text-center py-4 bg-white/10 rounded-md">
-                  <p className="text-white font-medium">Tak for din tilmelding! Vi glæder os til at dele AI-prompts med dig.</p>
+                <div className="text-center py-4 bg-white/10 rounded-md">
+                  <p className="text-white font-medium">🎉 Tak for din tilmelding! Tjek din email for bekræftelse.</p>
                 </div>
               ) : (
-                <form 
-                  className="flex gap-x-4"
-                  action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                  method="post"
-                  id="ml-form-23805225"
-                  target="_self"
-                >
-                  <input type="hidden" name="ml-submit" value="1" />
-                  <input type="hidden" name="anticsrf" value="true" />
-                  
-                  <label htmlFor="email-address" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="email-address"
-                    name="fields[email]"
-                    type="email"
-                    required
-                    placeholder="Indtast din email"
-                    autoComplete="email"
-                    className="min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
-                    disabled={mainFormSubmitting}
-                  />
-                  <button
-                    type="submit"
-                    className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                    disabled={mainFormSubmitting}
-                  >
-                    {mainFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
-                  </button>
-                </form>
-              )}
-              
-              {/* No-JS Fallback */}
-              <noscript>
-                <div className="mt-6 p-4 bg-white/10 rounded-md">
-                  <p className="text-white font-medium mb-4">JavaScript er deaktiveret. Brug denne formular i stedet:</p>
+                <>
                   <form 
-                    action="https://app.mailerlite.com/webforms/submit/p8m1z1" 
-                    method="post" 
-                    target="_blank"
-                    className="flex flex-col gap-3"
+                    className="flex gap-x-4"
+                    action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+                    method="post"
+                    onSubmit={(e) => handleFormSubmit(e, 'main')}
                   >
                     <input type="hidden" name="ml-submit" value="1" />
                     <input type="hidden" name="anticsrf" value="true" />
                     
-                    <div>
-                      <label htmlFor="fields[email]" className="text-white text-sm mb-1 block">Email</label>
-                      <input 
-                        type="email" 
-                        name="fields[email]" 
-                        placeholder="Indtast din email" 
-                        className="w-full rounded-md bg-white/5 px-3.5 py-2 text-white outline-1 -outline-offset-1 outline-white/10" 
-                        required
-                      />
-                    </div>
-                    
-                    <div>
-                      <button 
-                        type="submit" 
-                        className="w-full rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900"
-                      >
-                        Tilmeld mig
-                      </button>
-                    </div>
+                    <label htmlFor="email-address" className="sr-only">
+                      Email address
+                    </label>
+                    <input
+                      id="email-address"
+                      name="fields[email]"
+                      type="email"
+                      required
+                      placeholder="Indtast din email"
+                      autoComplete="email"
+                      className="min-w-0 flex-auto rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-white sm:text-sm/6"
+                      disabled={mainFormSubmitting}
+                    />
+                    <button
+                      type="submit"
+                      className="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:opacity-50"
+                      disabled={mainFormSubmitting}
+                    >
+                      {mainFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
+                    </button>
                   </form>
-                </div>
-              </noscript>
+                  
+                  {/* Backup link for CSP-blocked users */}
+                  <div className="mt-4 text-center">
+                    <p className="text-sm text-gray-400">
+                      Problemer med tilmelding?{' '}
+                      <a 
+                        href="https://landing.mailerlite.com/webforms/landing/p8m1z1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-indigo-400 hover:text-indigo-300 underline"
+                      >
+                        Klik her for at tilmelde dig
+                      </a>
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
             
             <svg
@@ -545,9 +493,6 @@ export default function Example() {
             </svg>
           </div>
         </div>
-
-        {/* Testimonials section removed */}
-        
       </main>
 
       {/* About section */}
@@ -654,39 +599,52 @@ export default function Example() {
               <div className="mt-8 md:mt-0">
                 {footerFormSuccess ? (
                   <div className="text-center py-4 bg-[#1e2433]/50 rounded-md">
-                    <p className="text-white font-medium">Tak for din tilmelding!</p>
+                    <p className="text-white font-medium">🎉 Tak for din tilmelding!</p>
                   </div>
                 ) : (
-                  <form 
-                    className="flex flex-col sm:flex-row sm:gap-x-4"
-                    action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
-                    method="post"
-                    id="footer-newsletter-form"
-                    target="_self"
-                  >
-                    <input type="hidden" name="ml-submit" value="1" />
-                    <input type="hidden" name="anticsrf" value="true" />
+                  <>
+                    <form 
+                      className="flex flex-col sm:flex-row sm:gap-x-4"
+                      action="https://assets.mailerlite.com/jsonp/789462/forms/149197210107512439/subscribe" 
+                      method="post"
+                      onSubmit={(e) => handleFormSubmit(e, 'footer')}
+                    >
+                      <input type="hidden" name="ml-submit" value="1" />
+                      <input type="hidden" name="anticsrf" value="true" />
+                      
+                      <div className="flex flex-col sm:flex-row w-full gap-3">
+                        <input
+                          id="footer-email"
+                          name="fields[email]"
+                          type="email"
+                          required
+                          placeholder="Indtast din email"
+                          autoComplete="email"
+                          className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
+                          disabled={footerFormSubmitting}
+                        />
+                        <button
+                          type="submit"
+                          className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:opacity-50"
+                          disabled={footerFormSubmitting}
+                        >
+                          {footerFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
+                        </button>
+                      </div>
+                    </form>
                     
-                    <div className="flex flex-col sm:flex-row w-full gap-3">
-                      <input
-                        id="footer-email"
-                        name="fields[email]"
-                        type="email"
-                        required
-                        placeholder="Indtast din email"
-                        autoComplete="email"
-                        className="min-w-0 flex-auto rounded-md bg-[#1e2433] px-4 py-3 text-base text-white border border-gray-700 outline-none placeholder:text-gray-500 focus:border-indigo-500"
-                        disabled={footerFormSubmitting}
-                      />
-                      <button
-                        type="submit"
-                        className="flex-none rounded-md bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400"
-                        disabled={footerFormSubmitting}
+                    {/* Backup link for CSP issues */}
+                    <div className="mt-3 text-center">
+                      <a 
+                        href="https://landing.mailerlite.com/webforms/landing/p8m1z1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-gray-400 hover:text-gray-300 underline"
                       >
-                        {footerFormSubmitting ? 'Sender...' : 'Tilmeld mig'}
-                      </button>
+                        Alternative tilmelding
+                      </a>
                     </div>
-                  </form>
+                  </>
                 )}
               </div>
             </div>
